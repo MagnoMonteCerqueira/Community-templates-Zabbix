@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>7.0</version>
+    <template_groups>
+        <template_group>
+            <uuid>02e4df4f20b848e79267641790f241da</uuid>
+            <name>Templates/Virtualization</name>
+        </template_group>
+    </template_groups>
+    <templates>
+        <template>
+            <uuid>94f344249e1c473fab1ce37d10767281</uuid>
+            <template>VMware Workstation 17 Pro by HTTP</template>
+            <name>VMware Workstation 17 Pro by HTTP</name>
+            <description>📘 Template: VMware Workstation 17 Pro by HTTP
+Autor: Magno M. Cerqueira
+Data de criação: 11/07/2025
+Versão: 1.0
+
+Curso relacionado:
+🎓 Zabbix 7.0 Academy: Monitoring Veeam backup from basic to advanced
+URL do curso: https://go.hotmart.com/C92709578Y?dp=1
+
+Descrição Geral:
+Este template foi desenvolvido para o monitoramento do VMware Workstation Pro 17 utilizando sua API REST nativa, acessada via chamadas HTTP. A coleta de dados é realizada sem necessidade de agente, tornando-o ideal para ambientes de testes, laboratórios ou uso local com múltiplas VMs.
+
+Funcionalidades Monitoradas:
+🔹 Nome da máquina virtual (VM)
+🔹 Estado de energia: poweredOn (ligada) ou poweredOff (desligada)
+🔹 Quantidade de CPUs alocadas
+🔹 Memória da VM em bytes
+🔹 Quantidade total de VMs
+🔹 Quantidade de VMs online e offline</description>
+            <vendor>
+                <name>Probix</name>
+                <version>7.0-1</version>
+            </vendor>
+            <groups>
+                <group>
+                    <name>Templates/Virtualization</name>
+                </group>
+            </groups>
+            <items>
+                <item>
+                    <uuid>e3006fb01e7147b38beb6970fccc4dab</uuid>
+                    <name>Get Erros</name>
+                    <type>SCRIPT</type>
+                    <key>veeam.get.erros</key>
+                    <trends>0</trends>
+                    <params>var ApiHealthCheck = {
+    params: {},
+
+    setParams: function(params) {
+        if (typeof params !== 'object') {
+            throw 'Parâmetros inválidos.';
+        }
+        if (typeof params.api_endpoint !== 'string' || params.api_endpoint.trim() === '') {
+            throw 'Parâmetro obrigatório &quot;api_endpoint&quot; não definido ou inválido.';
+        }
+        if (typeof params.status_schema !== 'string' || ['http', 'https'].indexOf(params.status_schema.toLowerCase()) === -1) {
+            throw 'Parâmetro obrigatório &quot;status_schema&quot; inválido. Deve ser &quot;http&quot; ou &quot;https&quot;.';
+        }
+
+        // Aceita api_port como string ou number e converte para inteiro
+        var port = params.api_port;
+        if (typeof port === 'string') {
+            port = parseInt(port, 10);
+        }
+        if (typeof port !== 'number' || isNaN(port) || port &lt;= 0) {
+            throw 'Parâmetro obrigatório &quot;api_port&quot; não definido ou inválido.';
+        }
+
+        this.params = params;
+        this.params.api_port = port;  // atualiza o valor convertido
+
+        var schema = this.params.status_schema.toLowerCase();
+        var endpoint = this.params.api_endpoint.trim();
+        var port = this.params.api_port;
+
+        if (endpoint.endsWith('/')) {
+            endpoint = endpoint.slice(0, -1);
+        }
+
+        this.params.full_url = schema + '://' + endpoint + ':' + port + '/api/vms/';
+
+        Zabbix.log(4, '[API HealthCheck] URL construída: ' + this.params.full_url);
+    },
+
+    checkApi: function() {
+        var req = new HttpRequest();
+        try {
+            var response = req.get(this.params.full_url);
+            var status = req.getStatus();
+
+            Zabbix.log(4, '[API HealthCheck] Status HTTP: ' + status);
+            Zabbix.log(4, '[API HealthCheck] Resposta: ' + response);
+
+            if (status === 200) {
+                return { status: status, data: 'Site online' };
+            } else {
+                return { status: status, data: 'Resposta inválida ou status diferente de 200' };
+            }
+        } catch (e) {
+            var status = (typeof req.getStatus === 'function') ? req.getStatus() : -1;
+            Zabbix.log(3, '[API HealthCheck] Erro na requisição: ' + String(e));
+            return { status: status, data: null, error: String(e) };
+        }
+    }
+};
+
+try {
+    Zabbix.log(4, '[API HealthCheck] Valor recebido: ' + value);
+    ApiHealthCheck.setParams(JSON.parse(value));
+    var result = ApiHealthCheck.checkApi();
+    return JSON.stringify(result);
+} catch (error) {
+    Zabbix.log(3, '[API HealthCheck] Erro geral: ' + error);
+    return JSON.stringify({ status: -1, data: null, error: String(error) });
+}</params>
+                    <description>Item: Get Errors
+Este item realiza a captura e monitoramento dos erros retornados pela API REST do VMware Workstation 17 Pro durante as requisições de coleta de dados. Ele verifica respostas de erro HTTP ou mensagens específicas de falhas no acesso às informações das máquinas virtuais.
+
+Ao identificar códigos de erro ou falhas na comunicação, o item registra essas informações para alertar o administrador, facilitando a rápida identificação e resolução de problemas no ambiente monitorado.
+
+📘 Template: VMware Workstation 17 Pro by HTTP
+Autor: Magno M. Cerqueira
+Data de criação: 11/07/2025
+Versão: 1.0
+
+Curso relacionado:
+🎓 Zabbix 7.0 Academy: Monitoring Veeam backup from basic to advanced
+URL do curso: https://go.hotmart.com/C92709578Y?dp=1</description>
+                    <valuemap>
+                        <name>Get rest api error status</name>
+                    </valuemap>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.status</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>{$VWP.DATA.TIMEOUT}</timeout>
+                    <parameters>
+                        <parameter>
+                            <name>api_endpoint</name>
+                            <value>{$VWP.API.URL}</value>
+                        </parameter>
+                        <parameter>
+                            <name>api_port</name>
+                            <value>{$VWP.API.PORT}</value>
+                        </parameter>
+                        <parameter>
+                            <name>status_schema</name>
+                            <value>{$VWP.STATUS.SCHEME}</value>
+                        </parameter>
+                    </parameters>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>raw</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>a33fe3e7cfd24ad0b01a210cd6efcac0</uuid>
+                            <expression>last(/VMware Workstation 17 Pro by HTTP/veeam.get.erros,#2)&lt;&gt;200</expression>
+                            <name>VMware Workstation Pro: There are errors in requests to API</name>
+                            <opdata>{ITEM.LASTVALUE1}</opdata>
+                            <priority>AVERAGE</priority>
+                            <description>Trigger: VMware Workstation Pro - Erros nas requisições à API
+Descrição:
+Este trigger dispara um alerta sempre que forem detectados erros nas requisições feitas à API REST do VMware Workstation Pro. Erros podem indicar problemas de comunicação, indisponibilidade do serviço, ou falhas na autenticação, afetando a coleta de dados e o monitoramento das máquinas virtuais.
+
+É fundamental investigar a causa do erro para garantir a integridade e a continuidade do monitoramento da infraestrutura virtualizada.
+
+📘 Template: VMware Workstation 17 Pro by HTTP
+Autor: Magno M. Cerqueira
+Data de criação: 11/07/2025
+Versão: 1.0
+
+Curso relacionado:
+🎓 Zabbix 7.0 Academy: Monitoring Veeam backup from basic to advanced
+URL do curso: https://go.hotmart.com/C92709578Y?dp=1</description>
+                            <tags>
+                                <tag>
+                                    <tag>scope</tag>
+                                    <value>availability</value>
+                                </tag>
+                            </tags>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>aedf4cc856c84ef5995801dbaae73d61</uuid>
+                    <name>Get metrics</name>
+                    <type>HTTP_AGENT</type>
+                    <key>veeam.get.metrics</key>
+                    <history>0</history>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <description>Item: Get Metrics
+Este item realiza uma requisição à API REST do VMware Workstation 17 Pro para obter os dados das máquinas virtuais em formato JSON. Através de uma chamada HTTP ao endpoint configurado (ex: /api/vms/), o item coleta informações detalhadas como o estado de energia, quantidade de CPUs, memória alocada e nomes das VMs.
+
+Os dados recebidos são processados para alimentar os itens de monitoramento no Zabbix, permitindo uma visão atualizada e automatizada do ambiente virtual, sem a necessidade de agentes adicionais.
+
+
+📘 Template: VMware Workstation 17 Pro by HTTP
+Autor: Magno M. Cerqueira
+Data de criação: 11/07/2025
+Versão: 1.0
+
+Curso relacionado:
+🎓 Zabbix 7.0 Academy: Monitoring Veeam backup from basic to advanced
+URL do curso: https://go.hotmart.com/C92709578Y?dp=1</description>
+                    <timeout>{$VWP.DATA.TIMEOUT}</timeout>
+                    <url>{$VWP.STATUS.SCHEME}://{$VWP.API.URL}:{$VWP.API.PORT}/api/vms/</url>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>raw</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>3ede7d3a0cc24163844858b3a02918f1</uuid>
+                    <name>Get Count VMs</name>
+                    <type>DEPENDENT</type>
+                    <key>vwp.get.count.vms</key>
+                    <delay>0</delay>
+                    <history>0</history>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <description>Item: Get Count VMs
+Este item realiza a coleta e contagem das máquinas virtuais (VMs) ativas no VMware Workstation 17 Pro via API REST. Através de chamadas à API, o item obtém o JSON com o estado das VMs, identificando o total, quantas estão ligadas (poweredOn) e quantas estão desligadas (poweredOff).
+
+Essa informação é essencial para o monitoramento da infraestrutura, permitindo controle preciso e visibilidade do ambiente virtualizado em tempo real.
+
+📘 Template: VMware Workstation 17 Pro by HTTP
+Autor: Magno M. Cerqueira
+Data de criação: 11/07/2025
+Versão: 1.0
+
+Curso relacionado:
+🎓 Zabbix 7.0 Academy: Monitoring Veeam backup from basic to advanced
+URL do curso: https://go.hotmart.com/C92709578Y?dp=1</description>
+                    <preprocessing>
+                        <step>
+                            <type>JAVASCRIPT</type>
+                            <parameters>
+                                <parameter>var VmStatusCounter = {
+    countTotal: 0,
+    countOnline: 0,
+    countOffline: 0,
+
+    parseData: function(value) {
+        var dataObj;
+        try {
+            dataObj = JSON.parse(value);
+        } catch (e) {
+            throw 'Erro ao analisar JSON: ' + e.message;
+        }
+
+        var vms = dataObj.vms_workstation &amp;&amp; dataObj.vms_workstation.data;
+        if (!vms || !vms.length) {
+            throw 'Formato do JSON inválido ou ausência de lista de VMs.';
+        }
+
+        this.countTotal = vms.length;
+
+        var online = 0;
+        var offline = 0;
+        for (var i = 0; i &lt; vms.length; i++) {
+            if (vms[i].Power === 'poweredOn') {
+                online++;
+            } else if (vms[i].Power === 'poweredOff') {
+                offline++;
+            }
+        }
+
+        this.countOnline = online;
+        this.countOffline = offline;
+
+        return {
+            total: this.countTotal,
+            online: this.countOnline,
+            offline: this.countOffline
+        };
+    }
+};
+
+try {
+    var result = VmStatusCounter.parseData(value);
+    return JSON.stringify(result);
+} catch (error) {
+    return JSON.stringify({ error: error });
+}
+</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>veeam.get.metrics</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>raw</value>
+                        </tag>
+                    </tags>
+                </item>
+            </items>
+            <discovery_rules>
+                <discovery_rule>
+                    <uuid>98dac49c276b4fdfad4c7f9f1e9787d6</uuid>
+                    <name>VMware VMs discovery</name>
+                    <type>DEPENDENT</type>
+                    <key>vmware.vm.discovery</key>
+                    <delay>0</delay>
+                    <description>Este discovery automático que identifica todas as máquinas virtuais (VMs) em execução ou desligadas no ambiente VMware Workstation Pro utilizando a API REST. Através desse discovery, o Zabbix coleta informações como ID, nome e status das VMs, possibilitando monitoramento contínuo, criação dinâmica de itens e triggers para cada VM detectada.
+
+Esta funcionalidade garante que o inventário das máquinas virtuais esteja sempre atualizado, facilitando a gestão e a supervisão da infraestrutura virtual.</description>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>fcfa1f0d40b44cf19281e5b66d6bc045</uuid>
+                            <name>CPU</name>
+                            <type>DEPENDENT</type>
+                            <key>vmware.vm.cpu[&quot;{#VWP_VM_ID}&quot;]</key>
+                            <delay>0</delay>
+                            <units>!Core</units>
+                            <description>Este item coleta a quantidade de CPUs virtuais alocadas para cada máquina virtual (VM) no ambiente VMware Workstation Pro, utilizando a API REST. A informação obtida permite monitorar a configuração da VM, identificar possíveis necessidades de ajuste de recursos e auxiliar na análise de desempenho das máquinas virtuais.
+
+📘 Template: VMware Workstation 17 Pro by HTTP
+Autor: Magno M. Cerqueira
+Data de criação: 11/07/2025
+Versão: 1.0
+
+Curso relacionado:
+🎓 Zabbix 7.0 Academy: Monitoring Veeam backup from basic to advanced
+URL do curso: https://go.hotmart.com/C92709578Y?dp=1</description>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <parameters>
+                                        <parameter>$.vms_workstation.data[?(@.Id==&quot;{#VWP_VM_ID}&quot;)].CPU.first()</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>veeam.get.metrics</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>component</tag>
+                                    <value>VMs</value>
+                                </tag>
+                                <tag>
+                                    <tag>VMs</tag>
+                                    <value>{#VWP_VM_NAME}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>7e7b4107f44543bba888a3d9ff230c91</uuid>
+                            <name>Id</name>
+                            <type>DEPENDENT</type>
+                            <key>vmware.vm.id[&quot;{#VWP_VM_ID}&quot;]</key>
+                            <delay>0</delay>
+                            <value_type>CHAR</value_type>
+                            <trends>0</trends>
+                            <description>Este item coleta o identificador único (ID) de cada máquina virtual (VM) gerenciada pelo VMware Workstation Pro através da API REST. O ID é essencial para diferenciar e referenciar cada VM de forma exclusiva dentro do ambiente monitorado, facilitando a integração, o controle e o gerenciamento das VMs no Zabbix.
+
+📘 Template: VMware Workstation 17 Pro by HTTP
+Autor: Magno M. Cerqueira
+Data de criação: 11/07/2025
+Versão: 1.0
+
+Curso relacionado:
+🎓 Zabbix 7.0 Academy: Monitoring Veeam backup from basic to advanced
+URL do curso: https://go.hotmart.com/C92709578Y?dp=1</description>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <parameters>
+                                        <parameter>$.vms_workstation.data[?(@.Id==&quot;{#VWP_VM_ID}&quot;)].Id.first()</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>veeam.get.metrics</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>component</tag>
+                                    <value>VMs</value>
+                                </tag>
+                                <tag>
+                                    <tag>VMs</tag>
+                                    <value>{#VWP_VM_NAME}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>9c77de98e9d24a3088a495cc496d2842</uuid>
+                            <name>Memory</name>
+                            <type>DEPENDENT</type>
+                            <key>vmware.vm.memory[&quot;{#VWP_VM_ID}&quot;]</key>
+                            <delay>0</delay>
+                            <units>B</units>
+                            <description>Este item coleta a quantidade de memória RAM alocada para cada máquina virtual (VM) gerenciada pelo VMware Workstation Pro via API REST. O valor é apresentado em bytes e representa a capacidade de memória disponível para a VM, permitindo monitoramento do uso e planejamento de recursos.
+
+📘 Template: VMware Workstation 17 Pro by HTTP
+Autor: Magno M. Cerqueira
+Data de criação: 11/07/2025
+Versão: 1.0
+
+Curso relacionado:
+🎓 Zabbix 7.0 Academy: Monitoring Veeam backup from basic to advanced
+URL do curso: https://go.hotmart.com/C92709578Y?dp=1</description>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <parameters>
+                                        <parameter>$.vms_workstation.data[?(@.Id==&quot;{#VWP_VM_ID}&quot;)].MemoryBytes.first()</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>veeam.get.metrics</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>component</tag>
+                                    <value>VMs</value>
+                                </tag>
+                                <tag>
+                                    <tag>VMs</tag>
+                                    <value>{#VWP_VM_NAME}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>e673b752873645e48f41aae7715c7e3a</uuid>
+                            <name>Status: {#VWP_VM_NAME}</name>
+                            <type>DEPENDENT</type>
+                            <key>vmware.vm.power[&quot;{#VWP_VM_ID}&quot;]</key>
+                            <delay>0</delay>
+                            <description>Este item monitora o estado de energia de cada máquina virtual (VM) no VMware Workstation Pro utilizando a API REST. Os possíveis valores indicam se a VM está ligada (poweredOn) ou desligada (poweredOff), permitindo o acompanhamento em tempo real do status operacional das VMs.
+
+📘 Template: VMware Workstation 17 Pro by HTTP
+Autor: Magno M. Cerqueira
+Data de criação: 11/07/2025
+Versão: 1.0
+
+Curso relacionado:
+🎓 Zabbix 7.0 Academy: Monitoring Veeam backup from basic to advanced
+URL do curso: https://go.hotmart.com/C92709578Y?dp=1</description>
+                            <valuemap>
+                                <name>VMware VMs Power Status</name>
+                            </valuemap>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <parameters>
+                                        <parameter>$.vms_workstation.data[?(@.Id==&quot;{#VWP_VM_ID}&quot;)].Power.first()</parameter>
+                                    </parameters>
+                                </step>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>try {
+    var power = value.trim();
+
+    if (power === &quot;poweredOn&quot;) {
+        return 0;
+    } else if (power === &quot;poweredOff&quot;) {
+        return 1;
+    } else {
+        return -1;  // Valor inesperado
+    }
+} catch (error) {
+    return -1;
+}
+</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>veeam.get.metrics</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>component</tag>
+                                    <value>VMs</value>
+                                </tag>
+                                <tag>
+                                    <tag>Status VMs</tag>
+                                    <value>{#VWP_VM_POWER}</value>
+                                </tag>
+                                <tag>
+                                    <tag>VMs</tag>
+                                    <value>{#VWP_VM_NAME}</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>5ef6b85bfe924822aa2ee192ab4ffff7</uuid>
+                                    <expression>last(/VMware Workstation 17 Pro by HTTP/vmware.vm.power[&quot;{#VWP_VM_ID}&quot;],#2)&lt;&gt;0</expression>
+                                    <name>The VMware &quot;{#VWP_VM_NAME}&quot; Power Off</name>
+                                    <priority>HIGH</priority>
+                                    <description>Dispara um alerta sempre que a máquina virtual &quot;{#VWP_VM_NAME}&quot; estiver desligada, indicando que a VM não está operacional. Esse monitoramento é útil para detectar quedas não planejadas de VMs ou desligamentos não autorizados.
+
+📘 Template: VMware Workstation 17 Pro by HTTP
+Autor: Magno M. Cerqueira
+Data de criação: 11/07/2025
+Versão: 1.0
+
+Curso relacionado:
+🎓 Zabbix 7.0 Academy: Monitoring Veeam backup from basic to advanced
+URL do curso: https://go.hotmart.com/C92709578Y?dp=1</description>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                    <master_item>
+                        <key>veeam.get.metrics</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JAVASCRIPT</type>
+                            <parameters>
+                                <parameter>try {
+    var parsed = JSON.parse(value);
+    var vms = parsed.vms_workstation.data;
+    var output = [];
+
+    for (var i = 0; i &lt; vms.length; i++) {
+        output.push({
+            &quot;{#VWP_VM_ID}&quot;: vms[i].Id,
+            &quot;{#VWP_VM_NAME}&quot;: vms[i].Name,
+            &quot;{#VWP_VM_POWER}&quot;: vms[i].Power
+        });
+    }
+
+    return JSON.stringify({ data: output });
+} catch (e) {
+    return JSON.stringify({ error: &quot;Erro ao processar JSON: &quot; + e.toString() });
+}
+</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                </discovery_rule>
+                <discovery_rule>
+                    <uuid>f1d3ee4f76434d1586660fd5b55c8701</uuid>
+                    <name>VMs count discovery</name>
+                    <type>DEPENDENT</type>
+                    <key>vwp.vm.count.discovery</key>
+                    <delay>0</delay>
+                    <description>Este discovery automático identifica e lista todas as máquinas virtuais (VMs) gerenciadas pelo VMware Workstation Pro via API REST. Ele coleta os dados de identificação, nome e status (ligada/desligada) de cada VM para permitir monitoramento dinâmico e atualizado da infraestrutura virtual.
+
+Com essa descoberta, é possível manter o inventário das VMs sempre sincronizado, facilitando a criação automática de itens, triggers e gráficos no Zabbix para cada máquina detectada.</description>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>7de49e1cdeed4b3fa2fed7d18d76c2f6</uuid>
+                            <name>VMs {#VWP.VMS.COUNT.NAME}</name>
+                            <type>DEPENDENT</type>
+                            <key>vwp.vms.count[&quot;{#VWP.VMS.COUNT.NAME}&quot;]</key>
+                            <delay>0</delay>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <parameters>
+                                        <parameter>$.{#VWP.VMS.COUNT.NAME}</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>vwp.get.count.vms</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>VMs count</tag>
+                                    <value>{#VWP.VMS.COUNT.NAME}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                    </item_prototypes>
+                    <master_item>
+                        <key>vwp.get.count.vms</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JAVASCRIPT</type>
+                            <parameters>
+                                <parameter>// Converte a string JSON recebida pelo Zabbix em objeto
+var parsed = JSON.parse(value);
+
+// Inicializa array para armazenar os nomes
+var output = [];
+
+// Itera sobre as chaves do objeto JSON original
+for (var key in parsed) {
+    if (parsed.hasOwnProperty(key)) {
+        output.push({ &quot;{#VWP.VMS.COUNT.NAME}&quot;: key });
+    }
+}
+
+// Retorna o JSON formatado para LLD
+return JSON.stringify({ data: output });
+</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                </discovery_rule>
+            </discovery_rules>
+            <macros>
+                <macro>
+                    <macro>{$VWP.API.PORT}</macro>
+                    <value>8080</value>
+                    <description>VMware API port.</description>
+                </macro>
+                <macro>
+                    <macro>{$VWP.API.URL}</macro>
+                    <value>&lt;PUT YOUR IP HOST&gt;</value>
+                    <description>VMware Workstation Pro service (hypervisor) REST AI IP (192.168.1.100).</description>
+                </macro>
+                <macro>
+                    <macro>{$VWP.DATA.TIMEOUT}</macro>
+                    <value>60s</value>
+                    <description>A response timeout for the API.</description>
+                </macro>
+                <macro>
+                    <macro>{$VWP.STATUS.SCHEME}</macro>
+                    <value>http</value>
+                    <description>VMware API scheme.</description>
+                </macro>
+            </macros>
+            <valuemaps>
+                <valuemap>
+                    <uuid>fac56077cbb54eac9af57b72707e23ba</uuid>
+                    <name>Get rest api error status</name>
+                    <mappings>
+                        <mapping>
+                            <value>200</value>
+                            <newvalue>Online</newvalue>
+                        </mapping>
+                    </mappings>
+                </valuemap>
+                <valuemap>
+                    <uuid>9f77b925038446778e5c71499b075634</uuid>
+                    <name>VMware VMs Power Status</name>
+                    <mappings>
+                        <mapping>
+                            <value>1</value>
+                            <newvalue>poweredOff</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>0</value>
+                            <newvalue>poweredOn</newvalue>
+                        </mapping>
+                    </mappings>
+                </valuemap>
+            </valuemaps>
+        </template>
+    </templates>
+</zabbix_export>
