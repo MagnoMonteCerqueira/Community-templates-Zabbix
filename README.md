@@ -24,6 +24,23 @@ Facilitar a colaboração entre usuários Zabbix, permitindo o compartilhamento 
 
 ---
 
+## 📦 Templates Disponíveis
+
+A estrutura dos diretórios é organizada por categoria para facilitar a navegação:
+
+### 🔄 Backup
+- **Veeam**
+  - [Veeam Rest API](Templates/Backup/Veeam/Veeam%20Rest%20API)
+  - [Veeam Trapper](Templates/Backup/Veeam/Veeam%20Trapper)
+- **Backup Exec**
+  - [Backup Exec Template](Templates/Backup/Backup%20Exec)
+
+### 🖥️ Hypervisor
+- **Vmware**
+  - [VMware Workstation Pro](Templates/Hypervisor/Vmware/VMware%20Workstation%20Pro)
+
+---
+
 ## 🚀 Como usar um template
 
 1. Faça o download do arquivo XML desejado.
