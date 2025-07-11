@@ -1,10 +1,10 @@
-
 # 🖥️ VMware Workstation 17 Pro by HTTP – Template para Zabbix 7.0+
 
 Este template permite o monitoramento completo do **VMware Workstation 17 Pro** utilizando a **API REST via HTTP**, sem necessidade de agentes ou SNMP. Ideal para ambientes locais, laboratórios e estações de trabalho com múltiplas VMs.
 
 > 📅 **Data de criação:** 11/07/2025  
 > 👨‍💻 **Autor:** Magno M. Cerqueira  
+> 🧩 **Versão do template:** 0.0.1  
 > 📚 **Curso relacionado:** [Zabbix 7.0 Academy – Monitoring Veeam backup from basic to advanced](https://go.hotmart.com/C92709578Y?dp=1)
 
 ---
