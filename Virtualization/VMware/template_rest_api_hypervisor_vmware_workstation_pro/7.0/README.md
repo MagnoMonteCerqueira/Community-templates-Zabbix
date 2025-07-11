@@ -25,6 +25,9 @@ Este template permite o monitoramento completo do **VMware Workstation 17 Pro** 
 - **VMware Workstation Pro:** versão 17 com API REST ativada  
 - Integração customizada que expõe o endpoint `/api/vms/`
 
+📚 **Documentação oficial da API:**  
+[Use the VMware Workstation Pro REST API Service (Broadcom TechDocs)](https://techdocs.broadcom.com/us/en/vmware-cis/desktop-hypervisors/workstation-pro/17-0/using-vmware-workstation-pro/using-vmware-workstation-pro-rest-api/use-the-vmware-workstation-pro-rest-api-service.html)
+
 ---
 
 ## ⚙️ Macros Necessárias
