@@ -92,4 +92,4 @@ Dúvidas ou sugestões? Abra uma **issue** ou entre em contato com os autores do
 
 ---
 
-Feito por e para a comunidade. 💙
+Feito para a comunidade. 💙
