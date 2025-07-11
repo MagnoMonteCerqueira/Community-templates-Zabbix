@@ -30,10 +30,10 @@ A estrutura dos diretórios é organizada por categoria para facilitar a navega�
 
 ### 🔄 Backup
 - **Veeam**
-  - [Veeam Rest API](Templates/Backup/Veeam/Veeam%20Rest%20API)
-  - [Veeam Trapper](Templates/Backup/Veeam/Veeam%20Trapper)
+  - [Veeam Rest API](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Backup/Veeam/Veeam%20Rest%20API)
+  - [Veeam Trapper](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Backup/Veeam/Veeam%20Trapper)
 - **Backup Exec**
-  - [Backup Exec Template](Templates/Backup/Backup%20Exec)
+  - [Backup Exec Template](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Backup/Backup_Exec)
 
 ### 🖥️ Hypervisor
 - **Vmware**
