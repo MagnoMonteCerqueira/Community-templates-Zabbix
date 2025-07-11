@@ -31,21 +31,19 @@ A estrutura dos diretórios é organizada por categoria para facilitar a navega�
 ## 📦 Status Dos Repositorios
 
 ✅ Liberado
-
 🟡 Manutenção
 
 ### 🔄 Backup
 - **Veeam**
- 🟡 - [Veeam Rest API](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Backup/Veeam/Veeam%20Rest%20API)
-
- 🟡 - [Veeam Trapper](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Backup/Veeam/Veeam%20Trapper)
+  - 🟡 [Veeam Rest API](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Backup/Veeam/Veeam%20Rest%20API)
+  - 🟡[Veeam Trapper](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Backup/Veeam/Veeam%20Trapper)
  
 - **Backup Exec**
-  🟡- [Backup Exec Template](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Backup/Backup_Exec)
+ - 🟡[Backup Exec Template](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Backup/Backup_Exec)
 
 ### 🖥️ Hypervisor
 - **Vmware**
-  ✅ - [VMware Workstation Pro](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Virtualization/VMware/template_rest_api_hypervisor_vmware_workstation_pro)
+   - ✅[VMware Workstation Pro](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Virtualization/VMware/template_rest_api_hypervisor_vmware_workstation_pro)
 
 ---
 
