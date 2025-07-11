@@ -117,4 +117,4 @@ Dúvidas ou sugestões? Abra uma **issue** ou entre em contato com os autores do
 
 ---
 
-Feito para a comunidade. 💙
+Feito com 💙 para a comunidade. 🛠️ + 👥
