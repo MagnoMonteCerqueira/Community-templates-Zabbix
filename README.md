@@ -83,8 +83,11 @@ Este repositório é mantido por colaboradores independentes e entusiastas Zabbi
 
 Dúvidas ou sugestões? Abra uma **issue** ou entre em contato com os autores dos templates para colaborar!  
 📧 **E-mail:** magnopeem@gmail.com  
+
 💬 **Telegram DEV:** [https://t.me/MagnoMCerqueira1](https://t.me/MagnoMonteCerqueira2)
+
 💬 **Telegram DEV:** [https://t.me/MagnoMCerqueira2](https://t.me/MagnoMCerqueira2)
+
 💬 **Telegram Zabbix Brasil:** https://t.me/ZabbixBrasil
 
 ---
