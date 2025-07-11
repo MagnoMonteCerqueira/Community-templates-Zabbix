@@ -1,4 +1,4 @@
-# 🖥️ VMware Workstation 17 Pro by HTTP – Template para Zabbix 7.0+
+# 🖥️ VMware Workstation 17 Pro by HTTP
 
 Este template permite o monitoramento completo do **VMware Workstation 17 Pro** utilizando a **API REST via HTTP**, sem necessidade de agentes ou SNMP. Ideal para ambientes locais, laboratórios e estações de trabalho com múltiplas VMs.
 
