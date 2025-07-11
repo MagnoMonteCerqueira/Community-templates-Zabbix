@@ -68,6 +68,7 @@ Contribuições são bem-vindas! Você pode ajudar de várias formas:
 - Atualizando descrições, itens e triggers
 - Melhorando esta documentação
 - Compartilhando sua experiência real com os templates
+- Pix: magnopeem@gmail.com
 
 ---
 
