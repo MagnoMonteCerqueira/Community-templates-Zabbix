@@ -37,7 +37,8 @@ A estrutura dos diretórios é organizada por categoria para facilitar a navega�
 
 ### 🖥️ Hypervisor
 - **Vmware**
-  - [VMware Workstation Pro](Templates/Hypervisor/Vmware/VMware%20Workstation%20Pro)
+  - [VMware Workstation Pro](Virtualization/VMware
+/template_rest_api_hypervisor_vmware_workstation_pro)
 
 ---
 
