@@ -31,12 +31,15 @@ A estrutura dos diretórios é organizada por categoria para facilitar a navega�
 ## 📦 Status Dos Repositorios
 
 ✅ Liberado
+
 🟡 Manutenção
 
 ### 🔄 Backup
 - **Veeam**
  🟡 - [Veeam Rest API](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Backup/Veeam/Veeam%20Rest%20API)
+
  🟡 - [Veeam Trapper](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Backup/Veeam/Veeam%20Trapper)
+ 
 - **Backup Exec**
   🟡- [Backup Exec Template](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Backup/Backup_Exec)
 
