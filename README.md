@@ -37,8 +37,7 @@ A estrutura dos diretórios é organizada por categoria para facilitar a navega�
 
 ### 🖥️ Hypervisor
 - **Vmware**
-  - [VMware Workstation Pro]([Virtualization/VMware
-/template_rest_api_hypervisor_vmware_workstation_pro](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Virtualization/VMware/template_rest_api_hypervisor_vmware_workstation_pro))
+  - [VMware Workstation Pro](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Virtualization/VMware/template_rest_api_hypervisor_vmware_workstation_pro)
 
 ---
 
