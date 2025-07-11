@@ -31,15 +31,15 @@ A estrutura dos diretórios é organizada por categoria para facilitar a navega�
 ## 📦 Status Dos Repositórios
 
 ✅ Liberado  
-🟡 Manutenção
+🛠️ Manutenção
 
 ### 🔄 Backup
 - **Veeam**
-  - 🟡 [Veeam Rest API](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Backup/Veeam/Veeam%20Rest%20API)
-  - 🟡 [Veeam Trapper](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Backup/Veeam/Veeam%20Trapper)
+  - 🛠️ [Veeam Rest API](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Backup/Veeam/Veeam%20Rest%20API)
+  - 🛠️ [Veeam Trapper](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Backup/Veeam/Veeam%20Trapper)
 
 - **Backup Exec**
-  - 🟡 [Backup Exec Template](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Backup/Backup_Exec)
+  - 🛠️ [Backup Exec Template](https://github.com/MagnoMonteCerqueira/Community-templates-Zabbix/tree/main/Backup/Backup_Exec)
 
 ### 🖥️ Hypervisor
 - **Vmware**
@@ -93,10 +93,10 @@ Contribuições são bem-vindas! Você pode ajudar de várias formas:
 
 Caso esteja iniciando com Zabbix ou queira evoluir no monitoramento com integrações avançadas:
 
-**Zabbix 7.0 Academy: Monitoring Veeam backup from basic to advanced**  
-URL: `https://go.hotmart.com/C92709578Y?dp=1`
+**[Zabbix 7.0 Academy: Monitoring Veeam backup from basic to advanced](https://go.hotmart.com/C92709578Y?dp=1)**
 
 ---
+
 
 ## 🛠️ Manutenção
 
