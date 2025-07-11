@@ -1,6 +1,6 @@
 # 📦 Zabbix Community Templates Não Oficial
 
-Este repositório é dedicado a templates criados e compartilhados pela comunidade Zabbix. Aqui, reunimos integrações que ajudam a ampliar o poder da plataforma Zabbix para monitoramento de aplicações, sistemas, serviços e ambientes diversos.
+Este repositório é dedicado a templates criados de minha autoria e compartilhado na comunidade Zabbix. Aqui, reunimos integrações que ajudam a ampliar o poder da plataforma Zabbix para monitoramento de aplicações, sistemas, serviços e ambientes diversos.
 
 ---
 
