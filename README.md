@@ -1,0 +1,1 @@
+# Community-templates-Zabbix
