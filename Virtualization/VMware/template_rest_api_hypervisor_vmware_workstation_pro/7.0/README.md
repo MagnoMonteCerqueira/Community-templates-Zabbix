@@ -120,6 +120,11 @@ Este template permite o monitoramento completo do **VMware Workstation 17 Pro** 
 - `README.md`: Este arquivo com todas as instruções
 
 ---
+## 🖥️ Dashboard
+
+<img src="https://raw.githubusercontent.com/MagnoMonteCerqueira/Community-templates-Zabbix/12ede3bec8f960cd495620137b28e57dacd34535/Virtualization/VMware/template_rest_api_hypervisor_vmware_workstation_pro/7.0/Dashboard%20VMware%20Workstation%20Pro%20V17%20-%20V1.JPG">
+
+---
 
 ## 🧠 Créditos
 
